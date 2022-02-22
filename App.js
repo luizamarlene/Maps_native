@@ -15,9 +15,10 @@ import Geolocation from '@react-native-community/geolocation';
 const {width, height} = Dimensions.get('screen');
 
 export default function App() {
-  const [region, setRegion] = useState(null);
+  const [region, setRegion] = useState({}); //vai mudar o mapa
   const [lat, setLat] = useState('');
   const [long, setLong] = useState('');
+  const [local, setLocal] = useState({});
   useEffect(() => {
     getMyLocation();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -26,7 +27,8 @@ export default function App() {
   function getMyLocation() {
     Geolocation.getCurrentPosition(
       info => {
-        //recebe as infos
+        //recebe as infos e passa para o bjeto region
+        console.log(info);
         setRegion({
           //enviar pra var region
           latitude: info.coords.latitude,
@@ -34,9 +36,10 @@ export default function App() {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         });
+        console.log(region);
       },
       () => {
-        console.error('deu ruim');
+        console.error('Erro');
       },
       {
         enableHighAccuracy: true,
@@ -45,9 +48,28 @@ export default function App() {
     );
   }
 
-  function home() {
-    setLat(region.latitude);
-    setLong(region.longitude);
+  function goToHome() {
+    // Minha casa {"latitude": -1.33684968, "latitudeDelta": 0.0922, "longitude": -48.41167595, "longitudeDelta": 0.0421}
+    setRegion({
+      latitude: -1.33684968,
+      longitude: -48.41167595,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    });
+  }
+
+  function changeMap({latitude, longitude}) {
+    setRegion({
+      latitude: latitude,
+      longitude: longitude,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    });
+  }
+
+  function click(e) {
+    console.log(e.nativeEvent);
+    setLat(e.nativeEvent)
   }
 
   return (
@@ -63,6 +85,8 @@ export default function App() {
               })
             : '';
         }}
+        onRegionChangeComplete={changeMap}
+        onPress={click}
         style={styles.map}
         region={region} //região
         zoomEnabled={true}
@@ -70,9 +94,10 @@ export default function App() {
         showsUserLocation={true}
         loadingEnabled={true}
       />
-      <Button style={styles.button} title="Minha casa" onPress={home} />
-      <Text>{lat}</Text>
-      <Text>{long}</Text>
+      <Button style={styles.button} title="Minha casa" onPress={goToHome} />
+      <Text style={styles.texto}>
+        {region.latitude} | {region.longitude}
+      </Text>
     </View>
   );
 }
@@ -85,7 +110,7 @@ const styles = StyleSheet.create({
   texto: {
     textAlign: 'center',
     marginTop: 30,
-    fontSize: 30,
+    fontSize: 15,
     fontWeight: 'bold',
     color: 'red',
   },
@@ -97,5 +122,6 @@ const styles = StyleSheet.create({
   button: {
     color: 'red',
     borderRadius: 20,
+    marginBottom: 30,
   },
 });
