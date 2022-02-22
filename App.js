@@ -69,7 +69,7 @@ export default function App() {
 
   function click(e) {
     console.log(e.nativeEvent);
-    setLat(e.nativeEvent)
+    setLat(e.nativeEvent);
   }
 
   return (
@@ -85,12 +85,16 @@ export default function App() {
               })
             : '';
         }}
+        mapType="hybrid" /* standard | satellite | hybrid */
         onRegionChangeComplete={changeMap}
         onPress={click}
         style={styles.map}
         region={region} //região
         zoomEnabled={true}
-        minZoomLevel={17}
+        scrollEnabled={true}
+        rotateEnabled={true}
+        showsTraffic={true}
+        minZoomLevel={19}
         showsUserLocation={true}
         loadingEnabled={true}
       />
