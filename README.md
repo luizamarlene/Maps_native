@@ -1,6 +1,4 @@
 <div align="center" id="top"> 
-  <img src="./.github/app.gif" alt="Maps" />
-
   &#xa0;
 
   <!-- <a href="https://maps.netlify.com">Demo</a> -->
@@ -46,13 +44,12 @@
 
 ## :dart: Sobre ##
 
-Projeto utlizado para aprender a utlizar a lib do Maps e Geolocalização
+Projeto utilizado para aprender a utlizar a lib do Maps e Geolocalização
 
 ## :sparkles: Funcionalidades ##
 
-:heavy_check_mark: Funcionalidade 1;\
-:heavy_check_mark: Funcionalidade 2;\
-:heavy_check_mark: Funcionalidade 3;
+:heavy_check_mark: Acessar a localização do usuário;\
+:heavy_check_mark: Mostar um map
 
 ## :rocket: Tecnologias ##
 
